@@ -137,6 +137,16 @@ test('no words glued together where a line break met a {variable}', async () => 
   }
 });
 
+test('brand icons use the refresh palette, not the retired teal look', async () => {
+  const svg = await readFile(join(dist, 'favicon.svg'), 'utf8');
+  assert.match(svg, /#ff5b24/i, 'favicon uses the hot-orange brand color');
+  assert.doesNotMatch(svg, /#0b6b62|#53c9bc|#0d141b/i, 'favicon still has old teal/blueprint colors');
+  const html = await readFile(join(dist, 'index.html'), 'utf8');
+  assert.match(html, /rel="apple-touch-icon" href="\/apple-touch-icon\.png"/);
+  await access(join(dist, 'apple-touch-icon.png'));
+  await access(join(dist, 'og.png'));
+});
+
 test('copy stays honest: no hype words or fabricated-proof patterns', async () => {
   // Guards against the exact failure modes this site promises to avoid.
   const banned = [
