@@ -13,8 +13,10 @@ Update when anything here is resolved.
 | Niche & geography | Local service businesses, Port St. Lucie / Treasure Coast, FL | |
 | Public pricing | Shown, with honest founding-client framing | Founding $1,200–$1,500; standard $1,800–$2,500; 50% deposit; two revision rounds. |
 | Contact method | `mailto:` from `SITE.email` | Placeholder address until the business inbox exists. |
-| Visual direction | Dark-first "proposal document, made visual" — deep blue-black, luminous teal, blueprint grid textures, ruler-tick underlines, Space Grotesk + Inter, mono spec accents | Zero client-side JS. Chosen 2026-07-17 over a light variant after side-by-side comparison; the light version is preserved on the `design/light` branch. |
-| Run PSL framing | Owned demonstration project, explicitly labeled | Never described as client work; no invented metrics. |
+| Visual direction (superseded 2026-09-28) | Dark-first "proposal document, made visual" — deep blue-black, luminous teal, blueprint grid textures, ruler-tick underlines, Space Grotesk + Inter, mono spec accents | Zero client-side JS. Chosen 2026-07-17 over a light variant after side-by-side comparison; the light version is preserved on the `design/light` branch. |
+| Run PSL framing (superseded 2026-09-28) | Owned demonstration project, explicitly labeled | Never described as client work; no invented metrics. |
+| Refresh: "See it first" (2026-09-28) | Warm off-white + ink + hot orange; Bricolage Grotesque + DM Sans (self-hosted); homepage leads with the free one-page concept offer and a CSS-only concept switcher (fictional businesses, labeled). | Chosen by Chris from the 002 sketch round (option C) to be live before the Sep 28–Oct 11 email test. |
+| Work page / Run PSL | Removed 2026-09-28; `/work/` 301s to `/`. About keeps one marathon-runner line. | Live Run PSL is the older plain version and its listings are stale; revisit if the volt version is updated and deployed. |
 
 ## Assumptions (unvalidated — revisit)
 

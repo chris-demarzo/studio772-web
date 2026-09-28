@@ -1,6 +1,6 @@
 ---
-import '@fontsource-variable/inter/index.css';
-import '@fontsource-variable/space-grotesk/index.css';
+import '@fontsource-variable/bricolage-grotesque/index.css';
+import '@fontsource-variable/dm-sans/index.css';
 import '../styles/global.css';
 import { SITE } from '../site.config';
 
@@ -22,9 +22,7 @@ const navLinks = [
   ['/', 'Home'],
   ['/services/', 'Services'],
   ['/process/', 'Process'],
-  ['/work/', 'Work'],
   ['/about/', 'About'],
-  ['/contact/', 'Contact'],
 ] as const;
 
 const year = new Date().getFullYear();
@@ -40,7 +38,7 @@ const year = new Date().getFullYear();
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0d141b" />
+    <meta name="theme-color" content="#f7f6f2" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={`${title} · ${SITE.name}`} />
@@ -56,20 +54,12 @@ const year = new Date().getFullYear();
 
     <header class="site-header">
       <div class="container">
-        <a class="brand" href="/" aria-label={`${SITE.name} home`}>
-          <svg viewBox="0 0 32 32" aria-hidden="true" fill="none">
-            <rect x="3" y="5" width="26" height="22" rx="3" stroke="#53c9bc" stroke-width="2.5" />
-            <line x1="3" y1="11.5" x2="29" y2="11.5" stroke="#53c9bc" stroke-width="2.5" />
-            <circle cx="7.5" cy="8.25" r="1.4" fill="#53c9bc" />
-            <line x1="8" y1="17" x2="19" y2="17" stroke="#e9eef3" stroke-width="2.5" stroke-linecap="round" />
-            <line x1="8" y1="22" x2="15" y2="22" stroke="#e9eef3" stroke-width="2.5" stroke-linecap="round" />
-          </svg>
-          <span>{SITE.name}</span>
-        </a>
+        <a class="brand" href="/" aria-label={`${SITE.name} home`}>Studio<sup>772</sup></a>
         <nav class="site-nav" aria-label="Primary">
           {navLinks.map(([href, label]) => (
             <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>
           ))}
+          <a class="nav-cta" href="/contact/" aria-current={path === '/contact/' ? 'page' : undefined}>Get my concept</a>
         </nav>
       </div>
     </header>
@@ -81,7 +71,7 @@ const year = new Date().getFullYear();
     <footer class="site-footer">
       <div class="container">
         <div>
-          <a class="brand" href="/">{SITE.name}</a>
+          <a class="brand" href="/">Studio<sup>772</sup></a>
           <p>
             {SITE.tagline}. Built and maintained
             by {SITE.owner}, serving {SITE.serviceArea}.
@@ -92,14 +82,14 @@ const year = new Date().getFullYear();
           <ul>
             <li><a href="/services/">Services</a></li>
             <li><a href="/process/">Process</a></li>
-            <li><a href="/work/">Work</a></li>
             <li><a href="/about/">About</a></li>
           </ul>
         </nav>
         <nav aria-label="Footer contact">
           <h2>Get in touch</h2>
           <ul>
-            <li><a href="/contact/">Request a quote</a></li>
+            <li><a href="/contact/">Get a free concept</a></li>
+            <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
             <li><a href="/privacy/">Privacy</a></li>
           </ul>
         </nav>

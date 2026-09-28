@@ -13,7 +13,6 @@ const expectedPages = [
   'index.html',
   'services/index.html',
   'process/index.html',
-  'work/index.html',
   'about/index.html',
   'contact/index.html',
   'privacy/index.html',
@@ -110,6 +109,31 @@ test('external links are https and safe when opening new tabs', async () => {
         assert.match(anchor[0], /rel="[^"]*noopener/, `${file.replace(dist, '')}: target=_blank without noopener`);
       }
     }
+  }
+});
+
+test('retired Work page and Run PSL demo are fully removed', async () => {
+  await assert.rejects(access(join(dist, 'work/index.html')), 'work page should not be built');
+  for (const file of await collectHtmlFiles(dist)) {
+    const html = await readFile(file, 'utf8');
+    assert.doesNotMatch(html, /run-psl|Run PSL|href="\/work\/?"/i, `${file.replace(dist, '')}: stale Run PSL / work reference`);
+  }
+});
+
+test('homepage concept switcher works without JavaScript and labels concepts as fictional', async () => {
+  const html = await readFile(join(dist, 'index.html'), 'utf8');
+  assert.equal((html.match(/type="radio" name="concept"/g) ?? []).length, 3, 'three concept radios');
+  assert.match(html, /fictional businesses/, 'concepts are labeled fictional');
+  assert.doesNotMatch(html, /<script/, 'homepage ships no scripts');
+});
+
+test('no words glued together where a line break met a {variable}', async () => {
+  for (const file of await collectHtmlFiles(dist)) {
+    const text = (await readFile(file, 'utf8'))
+      .replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '')
+      .replace(/<[^>]+>/g, ' ');
+    const glued = text.match(/\b[a-z]{2,}[A-Z][a-z]+/g) ?? [];
+    assert.deepEqual(glued, [], `${file.replace(dist, '')}: missing space in ${glued.join(', ')}`);
   }
 });
 

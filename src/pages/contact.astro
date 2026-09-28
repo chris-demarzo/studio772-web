@@ -5,17 +5,17 @@ import { SITE } from '../site.config';
 
 <BaseLayout
   title="Contact"
-  description={`Request a fixed quote for a local business website from ${SITE.name}. Tell me about your business and get a plain answer about fit, scope, and price.`}
+  description={`Get a free homepage concept and a fixed quote for a local business website from ${SITE.name}. Tell me about your business and get a plain answer about fit, scope, and price.`}
 >
-  <header class="page-intro grid-paper">
+  <header class="page-intro">
     <div class="container">
     <p class="eyebrow">Contact</p>
-    <h1 class="ruled">Request a quote</h1>
+    <h1>Get your <span class="hl">free</span> concept.</h1>
     <p class="lede">
       Email is the whole process — no forms that vanish into a CRM, no
       "discovery funnel." Tell me about your business and I'll reply with a
-      plain answer about whether this package fits, and a fixed quote if it
-      does.
+      plain answer about fit and, if it's a match, a one-page concept of your
+      homepage.
     </p>
     </div>
   </header>
@@ -42,12 +42,13 @@ import { SITE } from '../site.config';
     <h2>What happens next</h2>
     <p>
       I'll reply within one business day with either follow-up questions or a
-      straight assessment of fit. If we're a match, you get a written scope
-      and fixed quote — no obligation, no pressure follow-ups.
+      straight assessment of fit. If we're a match, I'll send a free concept
+      of your homepage. Like it? You get a written scope and fixed quote. No
+      obligation, no pressure follow-ups.
     </p>
 
     <div class="cta-row">
-      <a class="btn" href={`mailto:${SITE.email}?subject=Website%20quote%20request`}>
+      <a class="btn" href={`mailto:${SITE.email}?subject=Free%20concept%20request`}>
         Email {SITE.email}
       </a>
     </div>

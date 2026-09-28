@@ -1,114 +1,143 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../site.config';
+
+const concepts = [
+  {
+    id: 'concept-1',
+    cls: 'c1',
+    trade: 'Pressure washing',
+    style: 'Bold, high-contrast, quote-first',
+    img: '/concepts/pressure-washing.jpg',
+    alt: 'Concept homepage for a fictional pressure-washing business, shown on a phone',
+    why: 'Homeowners want a price. The quote button is the first thing they see.',
+    local: 'Service towns named up front, so “do you come to me?” is answered instantly.',
+  },
+  {
+    id: 'concept-2',
+    cls: 'c2',
+    trade: 'Landscaping',
+    style: 'Calm, editorial, premium residential',
+    img: '/concepts/landscaping.jpg',
+    alt: 'Concept homepage for a fictional landscaping business, shown on a phone',
+    why: 'Premium clients browse slowly. Big photography, calm type, room to breathe.',
+    local: 'Services read like a menu, not a sales pitch.',
+  },
+  {
+    id: 'concept-3',
+    cls: 'c3',
+    trade: 'Plumbing & HVAC',
+    style: 'Trust-forward, tap-to-call up top',
+    img: '/concepts/plumbing-hvac.jpg',
+    alt: 'Concept homepage for a fictional plumbing and HVAC business, shown on a phone',
+    why: 'Emergencies don’t scroll. Tap-to-call sits above everything.',
+    local: 'Licensing and service hours are visible immediately.',
+  },
+];
 ---
 
 <BaseLayout
-  title="Websites for local service businesses"
-  description={`Clear, fast, mobile-first websites for local service businesses in ${SITE.serviceArea}. Fixed scope, fixed quote, and you own everything.`}
+  title="Websites for Treasure Coast service businesses"
+  description={`See a concept of your new website before you pay anything. Clear, fast, mobile-first sites for local service businesses in ${SITE.serviceArea} — fixed quote, and you own everything.`}
 >
-  <section class="hero-wrap grid-paper">
-    <div class="hero container">
-      <div>
-        <p class="eyebrow">{SITE.serviceArea}</p>
-        <h1 class="ruled">Your work is solid. <em>Your website should say so.</em></h1>
-        <p class="lede">
-          I build clear, fast, mobile-first websites for local service
-          businesses — a fixed scope, a fixed quote, and a launch process you
-          can watch happen. No retainers you didn't ask for, no jargon, no
-          mystery.
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <p class="eyebrow">Websites for Treasure Coast service businesses</p>
+      <h1 id="hero-heading">See your new site <span class="hl">before</span> you pay a dime.</h1>
+      <div class="hero-row">
+        <p>
+          Tell me about your business and I’ll send a one-page concept of your
+          homepage — free, no commitment. If you like it, you get a fixed
+          written quote. If not, no hard feelings.
         </p>
         <div class="cta-row">
-          <a class="btn" href="/contact/">Request a quote</a>
-          <a class="btn secondary" href="/services/">See what's included</a>
+          <a class="btn" href="/contact/">Get my free concept →</a>
+          <a class="btn secondary" href="#concepts">See example concepts</a>
         </div>
       </div>
-      <aside class="scope-card" aria-label="Project specification summary">
-        <p>Project spec</p>
-        <dl>
-          <div><dt>Pages</dt><dd>3–5, focused</dd></div>
-          <div><dt>Quote</dt><dd>Fixed, in writing</dd></div>
-          <div><dt>Deposit</dt><dd>50%</dd></div>
-          <div><dt>Revisions</dt><dd>2 defined rounds</dd></div>
-          <div><dt>Hosting</dt><dd>Cloudflare network</dd></div>
-          <div><dt>Ownership</dt><dd>100% yours</dd></div>
-        </dl>
-      </aside>
+      <ul class="hero-facts" aria-label="The short version">
+        <li>From $1,200, fixed in writing</li>
+        <li>3–5 focused pages</li>
+        <li>Built in Port St. Lucie</li>
+        <li>100% yours</li>
+      </ul>
     </div>
-  </section>
 
-  <section class="section container" aria-labelledby="fit-heading">
-    <div class="section-head">
-      <p class="eyebrow">Who this is for</p>
-      <h2 id="fit-heading">Built for how customers actually find you</h2>
-      <p>
-        Most people looking for a local service search on their phone, skim
-        for thirty seconds, and contact whoever looks credible and answers
-        their questions. Your site has one job: pass that thirty-second test.
-      </p>
-    </div>
-    <div class="tile-grid">
-      <div class="tile">
-        <h3>Fast on any phone</h3>
-        <p>
-          Lightweight pages that load quickly on a job-site connection, not
-          just on office wifi. No bloated page builders or plugin stacks.
-        </p>
-      </div>
-      <div class="tile">
-        <h3>Answers the real questions</h3>
-        <p>
-          Do you serve my area? What exactly do you do? Can I trust you? How
-          do I reach you? Every page is organized around those questions.
-        </p>
-      </div>
-      <div class="tile">
-        <h3>One tap to contact you</h3>
-        <p>
-          Clear calls to action on every page, so an interested visitor never
-          has to hunt for how to request a quote.
-        </p>
+    <div class="concepts on-dark" id="concepts">
+      <input class="concept-input" type="radio" name="concept" id="concept-1" checked />
+      <input class="concept-input" type="radio" name="concept" id="concept-2" />
+      <input class="concept-input" type="radio" name="concept" id="concept-3" />
+      <div class="inner container">
+        <div>
+          <p class="eyebrow">Example concepts</p>
+          <h2>Every trade gets its own look — not a template with your logo swapped in.</h2>
+          <p class="sub">Pick a trade to see a concept homepage on a phone, where your customers will actually see it.</p>
+          <fieldset class="concept-tabs">
+            <legend>Choose an example concept</legend>
+            {concepts.map((c) => (
+              <label for={c.id}>
+                <span><b>{c.trade}</b><span>{c.style}</span></span>
+                <i aria-hidden="true">VIEWING</i>
+              </label>
+            ))}
+          </fieldset>
+          <p class="honest">
+            These are design concepts for fictional businesses — not client
+            work. Your concept uses your name, your services, and your area.
+          </p>
+          <div class="cta-row">
+            <a class="btn" href="/contact/">Get a concept of yours</a>
+          </div>
+        </div>
+        <div class="stage">
+          {concepts.map((c) => (
+            <p class={`note left ${c.cls}`}><b>Why</b>{c.why}</p>
+          ))}
+          <div class="phone">
+            {concepts.map((c, i) => (
+              <img
+                class={c.cls}
+                src={c.img}
+                alt={c.alt}
+                width="780"
+                height="1560"
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+            ))}
+          </div>
+          {concepts.map((c) => (
+            <p class={`note right ${c.cls}`}><b>Detail</b>{c.local}</p>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section container" aria-labelledby="how-heading">
-    <div class="section-head">
-      <p class="eyebrow">How it works</p>
-      <h2 id="how-heading">A defined process, start to finish</h2>
+    <div class="section-head split">
+      <h2 id="how-heading">Three steps. The first one’s free.</h2>
       <p>
-        You'll know the scope, the price, and the schedule before any work
-        begins — and you'll watch the site take shape on a private preview
-        link.
+        No sales pitch, no retainer, no mystery. You see real work before you
+        commit, and a fixed price before anything is built.
       </p>
     </div>
-    <ol class="steps">
+    <ol class="big-steps">
       <li>
-        <div>
-          <h3>Scope and quote</h3>
-          <p>
-            A short conversation about your business, then a written fixed
-            quote listing exactly what's included.
-          </p>
-        </div>
+        <span class="n" aria-hidden="true">1</span>
+        <h3>You tell me about your business</h3>
+        <p>A short email: what you do, where you work, and what you want the site to do. I’ll tell you honestly if this package fits.</p>
+        <span class="tag-free">Free</span>
       </li>
       <li>
-        <div>
-          <h3>Build and preview</h3>
-          <p>
-            I build the site and share a private preview link so you can see
-            real progress on your own phone, not mockups.
-          </p>
-        </div>
+        <span class="n" aria-hidden="true">2</span>
+        <h3>I send a free concept</h3>
+        <p>A one-page look at your homepage. If you like it, you get a written fixed quote. A 50% deposit books the project.</p>
+        <span class="tag-free">Free</span>
       </li>
-      <li>
-        <div>
-          <h3>Launch and handoff</h3>
-          <p>
-            The site goes live on fast, reliable hosting — and you own the
-            domain, the code, and the content. No lock-in.
-          </p>
-        </div>
+      <li class="dark">
+        <span class="n" aria-hidden="true">3</span>
+        <h3>We build it, you watch</h3>
+        <p>A private preview link on your phone, two revision rounds, then launch on your domain. You own everything.</p>
       </li>
     </ol>
     <div class="cta-row">
@@ -116,68 +145,62 @@ import { SITE } from '../site.config';
     </div>
   </section>
 
-  <section class="section container" aria-labelledby="work-heading">
-    <div class="section-head">
-      <p class="eyebrow">Evidence</p>
-      <h2 id="work-heading">A complete build, in the open</h2>
-    </div>
-    <div class="case-panel">
+  <section class="section container" aria-labelledby="price-heading">
+    <div class="receipt-wrap">
       <div>
-        <span class="badge">Demonstration project</span>
-        <h3>{SITE.demo.name} — a community running directory</h3>
+        <p class="eyebrow">Pricing</p>
+        <h2 id="price-heading">One package. One price. In writing.</h2>
         <p>
-          To prove out my delivery process end to end, I built and shipped a
-          real public website: research, content, design, code, automated
-          checks, and deployment — with the entire history visible on GitHub.
-          It's my own project, not client work, and that's the point: you can
-          inspect exactly how I build before hiring me.
+          I’m early in client work, so founding clients get a lower rate — and
+          that rate is locked once you hire me. Standard projects will run
+          $1,800–$2,500. What’s crossed off is out of scope on purpose; I’ll
+          point you elsewhere rather than improvise.
         </p>
         <div class="cta-row">
-          <a class="btn secondary" href="/work/">Read the case study</a>
+          <a class="btn secondary" href="/services/">Everything that’s included</a>
         </div>
       </div>
-      <div class="browser-frame">
-        <div class="frame-bar" aria-hidden="true">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span>run-psl.pages.dev</span>
-        </div>
-        <img
-          src="/run-psl-preview.png"
-          alt={`Screenshot of the ${SITE.demo.name} homepage showing its directory of local running events`}
-          width="1200"
-          height="900"
-          loading="lazy"
-        />
+      <div class="receipt" role="group" aria-labelledby="receipt-heading">
+        <h3 id="receipt-heading">STUDIO 772</h3>
+        <p class="sub">Founding-client project</p>
+        <dl>
+          <div><dt>3–5 mobile-first pages</dt><dd>✓</dd></div>
+          <div><dt>Copy help — you approve every word</dt><dd>✓</dd></div>
+          <div><dt>Local SEO foundations</dt><dd>✓</dd></div>
+          <div><dt>Accessibility-conscious build</dt><dd>✓</dd></div>
+          <div><dt>2 revision rounds</dt><dd>✓</dd></div>
+          <div><dt>Launch, handoff guide, full ownership</dt><dd>✓</dd></div>
+          <div class="x"><dt>Online store / booking portal</dt><dd>—</dd></div>
+          <div class="x"><dt>Ranking or lead promises</dt><dd>—</dd></div>
+        </dl>
+        <p class="total"><span>Total, fixed</span><strong>$1,200–$1,500</strong></p>
+        <small>50% to book · balance at launch · care plan optional</small>
       </div>
     </div>
   </section>
 
-  <div class="band dark">
-    <div class="container">
-      <p class="eyebrow">Founding-client rate</p>
-      <h2>Early clients get a lower rate, honestly framed</h2>
-      <p>
-        I'm building this service deliberately, one project at a time. My
-        first clients take a chance on someone newer to client work — so
-        founding projects are quoted from $1,200 instead of my planned
-        standard rate. Same process, same care, lower price.
-      </p>
+  <section class="section container" aria-labelledby="who-heading">
+    <div class="band on-dark">
+      <div>
+        <p class="eyebrow">Who you’re working with</p>
+        <h2 id="who-heading">One local person, start to finish.</h2>
+        <p>
+          I’m {SITE.owner}. I’ve lived in Port St. Lucie for over 25 years. The
+          person you email is the person who builds your site — no sales team,
+          no handoffs.
+        </p>
+      </div>
       <div class="cta-row">
-        <a class="btn" href="/services/#pricing">See pricing details</a>
+        <a class="btn secondary" href="/about/">More about me</a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <section class="section container" aria-labelledby="cta-heading">
-    <div class="section-head">
-      <h2 id="cta-heading">Ready when you are</h2>
-      <p>
-        Tell me about your business and what you need. You'll get a plain
-        answer about whether this package fits — and a fixed quote if it does.
-      </p>
-    </div>
+  <section class="section container closer" aria-labelledby="cta-heading">
+    <h2 id="cta-heading">Want to see <span>yours?</span></h2>
+    <p>Email me your business name, what you do, and where you work. I’ll reply within one business day.</p>
     <div class="cta-row">
-      <a class="btn" href="/contact/">Request a quote</a>
+      <a class="btn" href={`mailto:${SITE.email}?subject=Free%20concept%20request`}>Get my free concept →</a>
     </div>
   </section>
 </BaseLayout>
