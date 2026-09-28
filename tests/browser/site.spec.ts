@@ -114,30 +114,34 @@ test('concept switcher changes the phone screen on click', async ({ page }) => {
   await expect(page.locator('.phone img.c1')).toHaveCSS('opacity', '0');
 });
 
-test('concept notes sit in front of the phone, not behind it', async ({ page, isMobile }) => {
+test('concept notes sit beside the phone and never cover it', async ({ page, isMobile }) => {
   test.skip(isMobile, 'notes are hidden on small screens');
-  let checked = 0;
   for (const width of [960, 1100, 1280, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     await page.locator('.phone').scrollIntoViewIfNeeded();
     const phone = await page.locator('.phone').boundingBox();
-    for (const side of ['left', 'right']) {
-      const note = await page.locator(`.note.${side}.c1`).boundingBox();
-      if (!phone || !note) throw new Error(`${side} note or phone not rendered`);
-      // Sample the middle of the region where the note and phone overlap.
-      const x1 = Math.max(note.x, phone.x), x2 = Math.min(note.x + note.width, phone.x + phone.width);
-      const y1 = Math.max(note.y, phone.y), y2 = Math.min(note.y + note.height, phone.y + phone.height);
-      if (x2 <= x1 || y2 <= y1) continue; // no overlap at this width
-      checked++;
-      const onTop = await page.evaluate(
-        ([x, y]) => !!document.elementFromPoint(x, y)?.closest('.note'),
-        [(x1 + x2) / 2, (y1 + y2) / 2],
-      );
-      expect(onTop, `${side} note is behind the phone at ${width}px`).toBe(true);
+    const viewportWidth = width;
+    for (const cls of ['c1', 'c2', 'c3']) {
+      await page.locator(`label[for="concept-${cls.slice(1)}"]`).click();
+      for (const side of ['left', 'right']) {
+        const note = page.locator(`.note.${side}.${cls}`);
+        if (!(await note.isVisible())) continue; // hidden at this width by design
+        const box = await note.boundingBox();
+        if (!phone || !box) throw new Error(`${side} note or phone not rendered`);
+        const overlapX = Math.min(box.x + box.width, phone.x + phone.width) - Math.max(box.x, phone.x);
+        const overlapY = Math.min(box.y + box.height, phone.y + phone.height) - Math.max(box.y, phone.y);
+        expect(overlapX > 0 && overlapY > 0, `${side} ${cls} note covers the phone at ${width}px`).toBe(false);
+        expect(box.x, `${side} ${cls} note off-screen left at ${width}px`).toBeGreaterThanOrEqual(0);
+        expect(box.x + box.width, `${side} ${cls} note off-screen right at ${width}px`).toBeLessThanOrEqual(viewportWidth);
+      }
     }
   }
-  expect(checked, 'expected at least one width where a note overlaps the phone').toBeGreaterThan(0);
+  // At a normal laptop width, both notes must actually be showing.
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('.note.left.c1')).toBeVisible();
+  await expect(page.locator('.note.right.c1')).toBeVisible();
 });
 
 test('unknown routes show the custom 404 page', async ({ page }) => {
