@@ -172,8 +172,18 @@ main { display: block; min-height: 60vh; }
 .honest { margin: 1.4rem 0 0; font-size: 0.875rem; color: #9a978d; border-top: 1px solid #2c2c29; padding-top: 1rem; }
 .concepts .cta-row { margin: 1.4rem 0 3.5rem; }
 
-.stage { position: relative; height: 600px; display: flex; justify-content: center; align-items: flex-end; }
+/* Stage = phone + a notes column beside it. Notes never sit on the phone.
+   Each concept's two notes share the same grid cells; only the checked
+   concept's pair is visible (see state wiring below). */
+.stage {
+  position: relative; height: 600px;
+  display: grid; justify-content: center; align-items: start;
+  grid-template-columns: auto minmax(0, 240px);
+  grid-template-rows: 1fr auto auto 1.6fr;
+  column-gap: 30px; row-gap: 14px;
+}
 .phone {
+  grid-column: 1; grid-row: 1 / -1; align-self: end;
   position: relative; width: 300px; height: 590px;
   border-radius: 44px 44px 0 0; border: 10px solid #2b2b28; border-bottom: 0;
   background: #000; overflow: hidden;
@@ -186,15 +196,19 @@ main { display: block; min-height: 60vh; }
   transition: opacity 0.45s, transform 0.45s;
 }
 .note {
-  position: absolute; background: var(--bg); color: var(--ink);
+  position: relative; grid-column: 2; background: var(--bg); color: var(--ink);
   border-radius: 14px; padding: 0.75rem 1rem; font-size: 0.875rem; line-height: 1.4;
-  max-width: 215px; box-shadow: 0 20px 40px -15px rgb(0 0 0 / 0.6);
+  box-shadow: 0 20px 40px -15px rgb(0 0 0 / 0.6);
   opacity: 0; transition: opacity 0.3s; margin: 0;
-  z-index: 2; /* always float above the phone, whichever side it's on */
+}
+/* small orange tick pointing back at the phone */
+.note::before {
+  content: ''; position: absolute; left: -22px; top: 1.15rem;
+  width: 16px; height: 2px; border-radius: 2px; background: var(--hot);
 }
 .note b { display: block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--hot-text); margin-bottom: 0.15rem; }
-.note.left { left: 0; top: 90px; }
-.note.right { right: 0; top: 260px; }
+.note.left { grid-row: 2; }   /* "Why" */
+.note.right { grid-row: 3; }  /* "Detail" */
 
 /* state wiring: which concept is checked */
 #concept-1:checked ~ .inner label[for='concept-1'],
@@ -317,10 +331,17 @@ main { display: block; min-height: 60vh; }
 .footer-legal { grid-column: 1 / -1; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid #2c2c29; padding-top: 1.5rem; font-size: 0.9rem; }
 
 /* ---------- responsive ---------- */
+/* Narrow desktops/tablets: smaller phone so the notes column still fits beside it. */
+@media (min-width: 901px) and (max-width: 1180px) {
+  .stage { height: 500px; column-gap: 26px; grid-template-columns: auto minmax(0, 200px); }
+  .phone { width: 240px; height: 490px; border-radius: 38px 38px 0 0; }
+  .note { font-size: 0.8125rem; padding: 0.65rem 0.85rem; }
+  .note::before { left: -19px; width: 13px; }
+}
 @media (max-width: 900px) {
   .hero-row, .concepts .inner, .receipt-wrap, .band, .section-head.split { grid-template-columns: 1fr; }
   .hero-row .cta-row, .band .cta-row { justify-content: flex-start; }
-  .stage { height: 520px; }
+  .stage { height: 520px; display: flex; justify-content: center; align-items: flex-end; }
   .phone { width: 250px; height: 510px; }
   .note { display: none; }
   .concepts .cta-row { margin-bottom: 2.5rem; }
