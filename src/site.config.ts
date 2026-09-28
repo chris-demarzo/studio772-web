@@ -25,11 +25,4 @@ export const SITE = {
    */
   email: 'chris@studio772.com',
   emailPending: false,
-
-  /** Links to the demonstration project presented on the Work page. */
-  demo: {
-    name: 'Run PSL',
-    liveUrl: 'https://run-psl.pages.dev',
-    repoUrl: 'https://github.com/chris-demarzo/run-psl',
-  },
 } as const;

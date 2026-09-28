@@ -69,7 +69,6 @@ in sync if either changes.
 | Home | `src/pages/index.astro` |
 | Services & pricing | `src/pages/services.astro` |
 | Process | `src/pages/process.astro` |
-| Work (Run PSL case study) | `src/pages/work.astro` |
 | About | `src/pages/about.astro` |
 | Contact | `src/pages/contact.astro` |
 | Privacy | `src/pages/privacy.astro` |
