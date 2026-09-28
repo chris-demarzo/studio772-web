@@ -65,7 +65,8 @@ img { display: block; max-width: 100%; height: auto; }
 .container { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 1.75rem; }
 main { display: block; min-height: 60vh; }
 
-.section { padding: clamp(4.5rem, 9vw, 7rem) 0; }
+/* Vertical only — these share elements with .container, which owns the sides. */
+.section { padding-top: clamp(4.5rem, 9vw, 7rem); padding-bottom: clamp(4.5rem, 9vw, 7rem); }
 .section + .section { padding-top: 0; }
 .section-head { display: grid; gap: 1.25rem; margin-bottom: 2.75rem; max-width: 52rem; }
 .section-head.split { max-width: none; grid-template-columns: 1.2fr 1fr; align-items: end; gap: 2.5rem; }
@@ -323,6 +324,18 @@ main { display: block; min-height: 60vh; }
   .phone { width: 250px; height: 510px; }
   .note { display: none; }
   .concepts .cta-row { margin-bottom: 2.5rem; }
+  /* Phones: tabs → phone → fine print, so you can tap and see without scrolling. */
+  .concepts .inner { gap: 0; }
+  .concepts .inner > div:first-child { display: contents; }
+  .concepts .inner > div:first-child > * { order: 1; }
+  .concepts .inner > .stage { order: 2; height: auto; margin: 1.25rem 0 1.75rem; }
+  .concepts .inner > div:first-child > .honest,
+  .concepts .inner > div:first-child > .cta-row { order: 3; }
+  .concepts .phone { border-bottom: 10px solid #2b2b28; border-radius: 40px; }
+  .concepts .honest { margin-top: 0; }
+  .concepts .sub { margin-bottom: 1.1rem; }
+  .concept-tabs label { padding: 0.7rem 1rem; }
+  .concept-tabs b { font-size: 1.05rem; }
   .big-steps { grid-template-columns: 1fr; }
   .big-steps li { min-height: 0; }
   .big-steps h3 { padding-top: 1.5rem; }
@@ -331,11 +344,18 @@ main { display: block; min-height: 60vh; }
   .site-footer .container > div:first-child { grid-column: 1 / -1; }
 }
 @media (max-width: 600px) {
-  .container { padding: 0 1.25rem; }
+  /* The wrapped three-row header would eat ~20% of a phone screen if sticky. */
+  .site-header { position: static; }
+  /* Only the sides: a `padding` shorthand here would wipe the vertical
+     spacing of every `.section container` / `.prose container` on phones. */
+  .container { padding-left: 1.25rem; padding-right: 1.25rem; }
   .site-header .container { padding-top: 0.6rem; padding-bottom: 0.4rem; }
   .site-nav { width: 100%; gap: 0.1rem; }
   .site-nav a { padding: 0 0.6rem; font-size: 0.9rem; }
   .site-nav a.nav-cta { margin-left: auto; }
+  .phone { width: 230px; height: 440px; border-width: 8px; }
+  .concepts .phone { border-bottom-width: 8px; border-radius: 34px; }
+  .concepts .honest { padding-top: 1rem; }
   .steps > li { grid-template-columns: 1fr; gap: 0.75rem; }
   .receipt { padding: 1.75rem 1.4rem 2.4rem; transform: none; }
 }

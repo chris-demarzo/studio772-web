@@ -22,6 +22,45 @@ for (const path of pages) {
   });
 }
 
+for (const path of ['/', '/services/', '/process/', '/about/']) {
+  test(`${path} sections keep breathing room above and below`, async ({ page }) => {
+    await page.goto(path);
+    // Each block that follows a divider or button must have real space above it.
+    const pads = await page.evaluate(() =>
+      [...document.querySelectorAll('main .section, main .prose')].map((el) => {
+        const cs = getComputedStyle(el);
+        const followsSection = el.previousElementSibling?.classList.contains('section');
+        return {
+          cls: el.className,
+          top: followsSection ? null : parseFloat(cs.paddingTop),
+          bottom: parseFloat(cs.paddingBottom),
+          left: parseFloat(cs.paddingLeft),
+        };
+      }),
+    );
+    expect(pads.length).toBeGreaterThan(0);
+    for (const p of pads) {
+      if (p.top !== null) expect(p.top, `${p.cls} top padding`).toBeGreaterThanOrEqual(40);
+      expect(p.bottom, `${p.cls} bottom padding`).toBeGreaterThanOrEqual(40);
+      expect(p.left, `${p.cls} side padding`).toBeGreaterThanOrEqual(16);
+    }
+  });
+}
+
+test('on phones the concept tabs sit right above the phone mockup', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'desktop shows tabs and phone side by side');
+  await page.goto('/');
+  const tabs = await page.locator('.concept-tabs').boundingBox();
+  const phone = await page.locator('.phone').boundingBox();
+  if (!tabs || !phone) throw new Error('tabs or phone not rendered');
+  const gap = phone.y - (tabs.y + tabs.height);
+  expect(gap, 'space between tabs and phone').toBeGreaterThanOrEqual(0);
+  expect(gap, 'space between tabs and phone').toBeLessThanOrEqual(40);
+  // Tabs and the top half of the phone fit on one screen together.
+  const viewport = page.viewportSize();
+  expect(phone.y + phone.height / 2 - tabs.y).toBeLessThanOrEqual(viewport!.height);
+});
+
 test('skip link appears on keyboard focus and targets main content', async ({ page }) => {
   await page.goto('/');
   await page.keyboard.press('Tab');
