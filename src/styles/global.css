@@ -256,7 +256,7 @@ main { display: block; min-height: 60vh; }
   padding: clamp(2rem, 5vw, 3.5rem); display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.5rem; align-items: center;
 }
 .band h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
-.band p { color: var(--on-dark-muted); margin: 1rem 0 0; }
+.band p:not(.eyebrow) { color: var(--on-dark-muted); margin: 1rem 0 0; }
 .band .eyebrow { color: var(--on-dark-muted); }
 .band .cta-row { margin-top: 0; justify-content: flex-end; }
 

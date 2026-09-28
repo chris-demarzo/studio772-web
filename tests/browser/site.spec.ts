@@ -47,6 +47,28 @@ for (const path of ['/', '/services/', '/process/', '/about/']) {
   });
 }
 
+test('every small label sits the same distance above its heading', async ({ page }) => {
+  for (const path of ['/', '/services/', '/process/', '/about/']) {
+    await page.goto(path);
+    const gaps = await page.evaluate(() =>
+      [...document.querySelectorAll('main .eyebrow')].flatMap((label) => {
+        const next = label.nextElementSibling;
+        if (!next || !/^H[1-3]$/.test(next.tagName)) return [];
+        const gap = next.getBoundingClientRect().top - label.getBoundingClientRect().bottom;
+        return [{ label: label.textContent?.trim(), gap: Math.round(gap) }];
+      }),
+    );
+    expect(gaps.length, `${path} has labels`).toBeGreaterThan(0);
+    for (const g of gaps) {
+      expect(g.gap, `${path} "${g.label}" gap`).toBeGreaterThanOrEqual(12);
+      // Homepage labels must all match each other (hero, concepts, pricing, band).
+      if (path === '/') {
+        expect(Math.abs(g.gap - gaps[0].gap), `"${g.label}" matches "${gaps[0].label}"`).toBeLessThanOrEqual(2);
+      }
+    }
+  }
+});
+
 test('on phones the concept tabs sit right above the phone mockup', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'desktop shows tabs and phone side by side');
   await page.goto('/');
